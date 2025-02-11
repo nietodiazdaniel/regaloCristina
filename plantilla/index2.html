@@ -1,131 +1,95 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atrapa los Corazones</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rompecabezas Romántico</title>
     <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: #ffebf0;
-            text-align: center;
-        }
-        #gameCanvas {
-            background-color: #fff0f5;
-        }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #ffe6e6;
+      }
+      .puzzle-container {
+        display: grid;
+        grid-template-columns: repeat(6, 100px); /*COLUMNAS Y FILAS*/
+        grid-template-rows: repeat(6, 100px); /*COLUMNAS Y FILAS*/
+        gap: 2px;
+        border: 2px solid #d63384;
+      }
+      .piece {
+        width: 100px;
+        height: 100px;
+        background-size: 600px 600px; /*COLUMNAS *100*/
+        cursor: pointer;
+        border: 1px solid #fff;
+      }
     </style>
-</head>
-<body>
-    <h1>Atrapa los Corazones ❤️</h1>
-    <canvas id="gameCanvas"></canvas>
+  </head>
+  <body>
+    <div class="puzzle-container" id="puzzle"></div>
     <script>
-        const canvas = document.getElementById("gameCanvas");
-        const ctx = canvas.getContext("2d");
-        canvas.width = 800;
-        canvas.height = 600;
-        
-        const player = {
-            x: canvas.width / 2 - 25,
-            y: canvas.height - 50,
-            width: 50,
-            height: 50,
-            speed: 5,
-            dx: 0
-        };
-        
-        const hearts = [];
-        const heartSize = 50;
-        let score = 0;
-        let gameOver = false;
-        
-        // Cargar el video del corazón
-        const heartVideo = document.createElement('video');
-        heartVideo.src = '../img/juego6/Animation-1739276009894.webm';
-        heartVideo.loop = true;
-        heartVideo.muted = true;
-        heartVideo.play();
+      const imageSrc = "../img/juego8/IMG_1849.jpg"; // Reemplaza con tu imagen
+      let pieces = [];
+      let selected = null;
 
-        // Cargar la imagen del jugador
-        const playerImage = new Image();
-        playerImage.src = '../img/juego6/—Pngtree—half round cheese slice cartoon_19839934.png'; // Asegúrate de que la ruta sea correcta
+      function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
 
-        function drawPlayer() {
-            ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
+      function createPuzzle() {
+        const puzzle = document.getElementById("puzzle");
+        for (let i = 0; i < 36; i++) {
+          //PIEZAS TOTALES
+          const x = (i % 6) * -100; //COLUMNAS Y FILAS
+          const y = Math.floor(i / 6) * -100; //COLUMNAS Y FILAS
+          const piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.style.backgroundImage = `url(${imageSrc})`;
+          piece.style.backgroundPosition = `${x}px ${y}px`;
+          piece.dataset.index = i;
+          piece.addEventListener("click", selectPiece);
+          pieces.push(piece);
         }
+        shuffle(pieces);
+        pieces.forEach((piece) => puzzle.appendChild(piece));
+      }
 
-        // Asegúrate de que la imagen se haya cargado antes de iniciar el juego
-        playerImage.onload = () => {
-            //spawnHeart();
-            update();
-        };
-        
-        function drawHearts() {
-            hearts.forEach(heart => {
-                const aspectRatio = heartVideo.videoWidth / heartVideo.videoHeight;
-                const width = heartSize * aspectRatio;
-                const height = heartSize;
-                ctx.drawImage(heartVideo, heart.x, heart.y, width, height);
-            });
+      function selectPiece(event) {
+        if (!selected) {
+          selected = event.target;
+        } else {
+          const tempIndex = selected.dataset.index;
+          selected.dataset.index = event.target.dataset.index;
+          event.target.dataset.index = tempIndex;
+
+          const tempStyle = selected.style.backgroundPosition;
+          selected.style.backgroundPosition =
+            event.target.style.backgroundPosition;
+          event.target.style.backgroundPosition = tempStyle;
+
+          selected = null;
+          checkWin();
         }
-        
-        function updateHearts() {
-            for (let i = hearts.length - 1; i >= 0; i--) {
-                hearts[i].y += 2; //VELOCIDAD DE CAIDA DE RATONES
-                if (hearts[i].y > canvas.height) {
-                    hearts.splice(i, 1);
-                } else if (
-                    hearts[i].x > player.x && hearts[i].x < player.x + player.width &&
-                    hearts[i].y + heartSize / 2 > player.y && hearts[i].y - heartSize / 2 < player.y + player.height
-                ) {
-                    hearts.splice(i, 1);
-                    score++;
-                    if (score >= 15) {
-                        gameOver = true;
-                        alert("¡Ganaste! ❤️");
-                        document.location.reload();
-                    }
-                }
-            }
+      }
+
+      function checkWin() {
+        const correct = pieces.every(
+          (piece, index) => piece.dataset.index == index
+        );
+        if (correct) {
+          setTimeout(() => {
+            alert("¡Felicidades! Has completado el rompecabezas.");
+          }, 100);
         }
-        
-        function movePlayer() {
-            player.x += player.dx;
-            if (player.x < 0) player.x = 0;
-            if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
-        }
-        
-        function update() {
-            if (!gameOver) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                drawPlayer();
-                drawHearts();
-                updateHearts();
-                movePlayer();
-                requestAnimationFrame(update);
-            }
-        }
-        
-        function spawnHeart() {
-            if (!gameOver) {
-                hearts.push({ x: Math.random() * (canvas.width - heartSize), y: 0 });
-                setTimeout(spawnHeart, 900);
-            }
-        }
-        
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "ArrowLeft") player.dx = -player.speed;
-            if (e.key === "ArrowRight") player.dx = player.speed;
-        });
-        
-        document.addEventListener("keyup", () => {
-            player.dx = 0;
-        });
-        
-        heartVideo.addEventListener('loadeddata', () => {
-            spawnHeart();
-            update();
-        });
+      }
+
+      createPuzzle();
     </script>
-</body>
+  </body>
 </html>

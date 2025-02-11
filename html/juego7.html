@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAN VALENTIN</title>
+    <link rel="stylesheet" href="../bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <style>
+        @font-face {
+            font-family: PressStart;
+            src: url("../css/fonts/PressStart2P-Regular.ttf") format("truetype");
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-image: url("../img/fondo-3def.svg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding-top: 80px; /* Ajuste para navbar */
+            //text-align: center;
+        }
+         /* Navbar */
+         .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 60px;
+            background-color: #ff69b4;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        /* Logo */
+        .logo {
+            height: 40px;
+        }
+        /* Contenedor de progreso */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            justify-content: center;
+            margin: 0 20px;
+            gap: 10px;
+        }
+        .progress-label {
+            font-family: PressStart, sans-serif;
+            font-size: 1em;
+            font-weight: bold;
+            color: white;
+        }
+        .progress {
+            width: 60%;
+            height: 20px;
+            margin: 0;
+        }
+        /* Perfil */
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+        .username {
+            font-size: 1em;
+            color: white;
+            font-weight: bold;
+        }
+        hr {
+                width: 500px;
+            }
+
+            #title {
+                font-size: 36px;
+                font-weight: bold;
+                letter-spacing: 2px;
+            }
+
+            #board {
+                width: 350px;
+                height: 420px;
+                margin: 0 auto;
+                margin-top: 3px;
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .tile {
+                /* Box */
+                border: 2px solid #c9184a;
+                width: 60px;
+                height: 60px;
+                margin: 2.5px;
+
+                /* Text */
+                color: black;
+                font-size: 36px;
+                font-weight: bold;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .correct {
+                background-color: #6AAA64;
+                color: white;
+                border-color: white;
+            }
+
+            .present {
+                background-color: #C9B458;
+                color: white;
+                border-color: white;
+            }
+
+            .absent {
+                background-color: #787C7E;
+                color: white;
+                border-color:white;
+            }
+
+
+            .keyboard-row {
+                width: 400px;
+
+                margin: 0 auto;
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .key-tile {
+                width: 36px;
+                height: 40px;
+                margin: 1px;
+                border: 1px solid lightgray;
+
+                /* Text */
+                font-size: 20px;
+                font-weight: bold;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .enter-key-tile {
+                width: 76px;
+                height: 40px;
+                margin: 1px;
+                border: 1px solid lightgray;
+
+                /* Text */
+                font-size: 20px;
+                font-weight: bold;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+    </style>
+</head>
+<body>
+     <!-- Modal Explicación -->
+     <div class="modal fade" id="explanationModal" tabindex="-1" aria-labelledby="explanationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="explanationModalLabel" style="font-family: PressStart,sans-serif;color: #c9184a;font-size: 1em;">Juego 7: Wordle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p style="font-family: PressStart,sans-serif;font-size: 0.75em;">En este juego wordle, deberás adivinar la palabra de 5 letras en menos de 6 intentos. ¡Buena suerte!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="background-color: #c9184a;font-family: PressStart,sans-serif;font-size: 0.7em;">¡Vamos a jugar!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Enhorabuena -->
+    <div class="modal fade" id="congratulationsModal" tabindex="-1" aria-labelledby="congratulationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="congratulationsModalLabel" style="font-family: PressStart,sans-serif;color: #c9184a;font-size: 1em;">¡Enhorabuena!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p style="font-family: PressStart,sans-serif;font-size: 0.75em;">Has superado el juego 7!</p>
+                    <br>
+                    <p style="font-family: PressStart,sans-serif;font-size: 0.75em;">Pista: O</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='juego8.html'" style="background-color: #c9184a;font-family: PressStart,sans-serif;font-size: 0.7em;">Siguiente Juego</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <!-- Logo -->
+        <img src="../img/LOGO.png" alt="Logo" class="logo">
+
+        <!-- Barra de progreso -->
+        <div class="progress-container">
+            <span class="progress-label">Progreso:</span>
+            <div class="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div id="progress-bar" class="progress-bar" style="width:60%; background-color:#c9184a;font-family: PressStart,sans-serif;">60%</div>
+            </div>
+        </div>
+
+        <!-- Perfil -->
+        <div class="profile-container">
+            <img src="../img/IMG_4134.jpg" alt="Perfil" class="profile-pic">
+            <span class="username">cris_dhl</span>
+        </div>
+    </nav>
+
+    <h1 id="title" style="font-family: PressStart,sans-serif; color:#c9184a; font-size: 1.5em;">Wordle</h1>
+        <hr>
+        <br>
+        <div id="board">
+        </div>
+
+        <br>
+        <h1 id="answer"></h1>
+    <script>
+        function aumentarProgreso(valor) {
+            let barra = document.getElementById("progress-bar");
+            let progresoActual = parseInt(barra.style.width); // Obtener el progreso actual como número
+            let nuevoProgreso = Math.min(progresoActual + valor, 100); // Asegurar que no pase del 100%
+
+            barra.style.width = nuevoProgreso + "%"; 
+            barra.innerText = nuevoProgreso + "%"; 
+        }
+
+        // Función para mostrar el modal de enhorabuena
+        function showCongratulationsModal() {
+            var congratulationsModal = new bootstrap.Modal(document.getElementById('congratulationsModal'));
+            congratulationsModal.show();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var explanationModal = new bootstrap.Modal(document.getElementById('explanationModal'));
+            explanationModal.show();
+            mostrarSilueta();
+        });
+    </script>
+
+    <script>
+                
+        var height = 6; //number of guesses
+        var width = 5; //length of the word
+
+        var row = 0; //current guess (attempt #)
+        var col = 0; //current letter for that attempt
+
+        var gameOver = false;
+        // var word = "SQUID";
+        var wordList = ["teamo","loveu","besos","novio","lucas","novia","belle","tonta"]
+
+
+
+
+        var word = wordList[Math.floor(Math.random()*wordList.length)].toUpperCase();
+        console.log(word);
+
+        window.onload = function(){
+            intialize();
+        }
+        function reiniciarJuego() {
+            row = 0;
+            col = 0;
+            gameOver = false;
+            word = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
+            document.getElementById("board").innerHTML = "";
+            document.getElementById("answer").innerText = "";
+            // Limpiar el teclado
+            let keys = document.querySelectorAll(".key-tile, .enter-key-tile");
+            keys.forEach(key => {
+                key.classList.remove("correct", "present", "absent");
+            });
+            initialize();
+        }
+
+        function intialize() {
+
+            // Create the game board
+            for (let r = 0; r < height; r++) {
+                for (let c = 0; c < width; c++) {
+                    // <span id="0-0" class="tile">P</span>
+                    let tile = document.createElement("span");
+                    tile.id = r.toString() + "-" + c.toString();
+                    tile.classList.add("tile");
+                    tile.innerText = "";
+                    document.getElementById("board").appendChild(tile);
+                }
+            }
+
+            // Create the key board
+            let keyboard = [
+                ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+                ["A", "S", "D", "F", "G", "H", "J", "K", "L", " "],
+                ["Enter", "Z", "X", "C", "V", "B", "N", "M", "⌫" ]
+            ]
+
+            
+            // // Clear existing keyboard rows
+            // let existingRows = document.querySelectorAll(".keyboard-row");
+            // existingRows.forEach(row => row.remove());
+
+            for (let i = 0; i < keyboard.length; i++) {
+                let currRow = keyboard[i];
+                let keyboardRow = document.createElement("div");
+                keyboardRow.classList.add("keyboard-row");
+
+                for (let j = 0; j < currRow.length; j++) {
+                    let keyTile = document.createElement("div");
+
+                    let key = currRow[j];
+                    keyTile.innerText = key;
+                    if (key == "Enter") {
+                        keyTile.id = "Enter";
+                    }
+                    else if (key == "⌫") {
+                        keyTile.id = "Backspace";
+                    }
+                    else if ("A" <= key && key <= "Z") {
+                        keyTile.id = "Key" + key; // "Key" + "A";
+                    } 
+
+                    keyTile.addEventListener("click", processKey);
+
+                    if (key == "Enter") {
+                        keyTile.classList.add("enter-key-tile");
+                    } else {
+                        keyTile.classList.add("key-tile");
+                    }
+                    keyboardRow.appendChild(keyTile);
+                }
+                document.body.appendChild(keyboardRow);
+            }
+            
+
+            // Listen for Key Press
+            document.addEventListener("keyup", (e) => {
+                processInput(e);
+            })
+        }
+
+        function processKey() {
+            e = { "code" : this.id };
+            processInput(e);
+        }
+
+        function processInput(e) {
+            if (gameOver) return; 
+
+            // alert(e.code);
+            if ("KeyA" <= e.code && e.code <= "KeyZ") {
+                if (col < width) {
+                    let currTile = document.getElementById(row.toString() + '-' + col.toString());
+                    if (currTile.innerText == "") {
+                        currTile.innerText = e.code[3];
+                        col += 1;
+                    }
+                }
+            }
+            else if (e.code == "Backspace") {
+                if (0 < col && col <= width) {
+                    col -=1;
+                }
+                let currTile = document.getElementById(row.toString() + '-' + col.toString());
+                currTile.innerText = "";
+            }
+
+            else if (e.code == "Enter") {
+                update();
+            }
+
+            if (!gameOver && row == height) {
+                gameOver = true;
+                document.getElementById("answer").innerText = word;
+                setTimeout(() => {
+                    document.location.reload();
+                }, 3000); // Reiniciar el juego después de 3 segundos
+            }
+        }
+
+        function update() {
+            let guess = "";
+            document.getElementById("answer").innerText = "";
+
+            //string up the guesses into the word
+            for (let c = 0; c < width; c++) {
+                let currTile = document.getElementById(row.toString() + '-' + c.toString());
+                let letter = currTile.innerText;
+                guess += letter;
+            }
+
+            guess = guess.toLowerCase(); //case sensitive
+            console.log(guess);
+
+            // if (!guessList.includes(guess)) {
+            //     document.getElementById("answer").innerText = "Not in word list";
+            //     return;
+            // }
+            
+            //start processing guess
+            let correct = 0;
+
+            let letterCount = {}; //keep track of letter frequency, ex) KENNY -> {K:1, E:1, N:2, Y: 1}
+            for (let i = 0; i < word.length; i++) {
+                let letter = word[i];
+
+                if (letterCount[letter]) {
+                letterCount[letter] += 1;
+                } 
+                else {
+                letterCount[letter] = 1;
+                }
+            }
+
+            console.log(letterCount);
+
+            //first iteration, check all the correct ones first
+            for (let c = 0; c < width; c++) {
+                let currTile = document.getElementById(row.toString() + '-' + c.toString());
+                let letter = currTile.innerText;
+
+                //Is it in the correct position?
+                if (word[c] == letter) {
+                    currTile.classList.add("correct");
+
+                    let keyTile = document.getElementById("Key" + letter);
+                    keyTile.classList.remove("present");
+                    keyTile.classList.add("correct");
+
+                    correct += 1;
+                    letterCount[letter] -= 1; //deduct the letter count
+                }
+
+                if (correct == width) {
+                    gameOver = true;
+                    setTimeout(()=>{
+                            showCongratulationsModal();
+                            aumentarProgreso(10);
+                    }, 100);
+                }
+                                
+            }
+
+            console.log(letterCount);
+            //go again and mark which ones are present but in wrong position
+            for (let c = 0; c < width; c++) {
+                let currTile = document.getElementById(row.toString() + '-' + c.toString());
+                let letter = currTile.innerText;
+
+                // skip the letter if it has been marked correct
+                if (!currTile.classList.contains("correct")) {
+                    //Is it in the word?         //make sure we don't double count
+                    if (word.includes(letter) && letterCount[letter] > 0) {
+                        currTile.classList.add("present");
+                        
+                        let keyTile = document.getElementById("Key" + letter);
+                        if (!keyTile.classList.contains("correct")) {
+                            keyTile.classList.add("present");
+                        }
+                        letterCount[letter] -= 1;
+                    } // Not in the word or (was in word but letters all used up to avoid overcount)
+                    else {
+                        currTile.classList.add("absent");
+                        let keyTile = document.getElementById("Key" + letter);
+                        keyTile.classList.add("absent")
+                    }
+                }
+            }
+
+            row += 1; //start new row
+            col = 0; //start at 0 for new row
+        }
+    </script>
+    <script defer type="text/javascript" src="../jquery/jquery-3.7.1.min.js"></script>
+    <script defer type="text/javascript" src="../bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+    <script defer type="text/javascript" src="../jquery/popper.min.js"></script>
+</body>
+</html>
