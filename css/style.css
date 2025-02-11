@@ -1,0 +1,142 @@
+/*FUENTES DE TEXTO*/
+@font-face {
+  font-family: KarmaticArcade;
+  src: url("./fonts/ka1.ttf") format("truetype");
+}
+@font-face {
+  font-family: PressStart;
+  src: url("./fonts/PressStart2P-Regular.ttf") format("truetype");
+}
+/************************************************************************************************************** */
+/*STYLE DE BIENVENIDA*/
+/***************************************************************************************************************/
+#body_bienvenida {
+  /* background-color: #ffc0cb; */
+  background-image: url("../img/fondo-3def.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+#titulo_bienvenida {
+  font-size: 5em;
+  color: #c9184a;
+  font-family: KarmaticArcade, sans-serif;
+  letter-spacing: 20px;
+  margin-bottom: 40px;
+}
+#parrafo_bienvenida {
+  font-family: PressStart, sans-serif;
+  font-size: 1.5em;
+  color: #fff;
+  max-width: 600px;
+  margin-top: 0;
+}
+#boton_bienvenida {
+  background-color: #ff69b4;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.2em;
+  font-family: PressStart, sans-serif;
+  cursor: pointer;
+  margin-top: 20px;
+}
+#boton_bienvenida:hover {
+  background-color: #ff1493;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 3em;
+    letter-spacing: 10px;
+  }
+  p {
+    font-size: 1em;
+  }
+  .btn {
+    padding: 10px 20px;
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2em;
+    letter-spacing: 5px;
+  }
+  p {
+    font-size: 0.8em;
+  }
+  .btn {
+    padding: 8px 16px;
+    font-size: 0.8em;
+  }
+}
+/**************************************************************************************************************/
+
+/**************************************************************************************************************/
+/*STYLE DE SIGNIN*/
+/**************************************************************************************************************/
+#iniciar_sesion {
+  font-family: PressStart, sans-serif;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #c9184a;
+}
+#login-container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 300px;
+}
+.input_signin {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+#ingresar {
+  background-color: #ff69b4;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+#ingresar:hover {
+  background-color: #ff1493;
+}
+.error {
+  color: red;
+  font-siz
+  e: 14px;
+}
+#welcomeModalLabel{
+  font-family: PressStart, sans-serif;
+  color: #c9184a;
+}
+#boton_iniciarjuegos{
+  background-color: #ff69b4;
+}
+/**************************************************************************************************************/
+
+/**************************************************************************************************************/
+/*STYLE DE JUEGO1*/
+/**************************************************************************************************************/

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAN VALENTIN</title>
+    <link rel="stylesheet" href="../bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <style>
+        @font-face {
+            font-family: PressStart;
+            src: url("../css/fonts/PressStart2P-Regular.ttf") format("truetype");
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-image: url("../img/fondo-3def.svg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding-top: 80px; /* Ajuste para navbar */
+        }
+         /* Navbar */
+         .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 60px;
+            background-color: #ff69b4;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        /* Logo */
+        .logo {
+            height: 40px;
+        }
+        /* Contenedor de progreso */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            justify-content: center;
+            margin: 0 20px;
+            gap: 10px;
+        }
+        .progress-label {
+            font-family: PressStart, sans-serif;
+            font-size: 1em;
+            font-weight: bold;
+            color: white;
+        }
+        .progress {
+            width: 60%;
+            height: 20px;
+            margin: 0;
+        }
+        /* Perfil */
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+        .username {
+            font-size: 1em;
+            color: white;
+            font-weight: bold;
+        }
+
+        .contenedor {
+    width: 920px;
+    height: 280px;
+    margin: 0 auto;
+    
+    position: relative;
+
+    background: linear-gradient(#b7d6c7, transparent) #ffe2d1;/*linear-gradient(#90ebff, white);*/
+    transition: background-color 1s linear;
+    overflow: hidden;
+}
+
+.mediodia {
+    background-color: #ffdcf3;
+}
+
+.tarde {
+    background-color: #ffadad;
+}
+
+.noche {
+    background-color: #aca8c7;
+}
+
+.dino {
+    width: 84px;
+    height: 84px;
+
+    position: absolute;
+    bottom: 22px;
+    left: 42px;
+    z-index: 2;
+
+    background: url(../img/juego5/dino.png) repeat-x 0px 0px;
+    background-size: 336px 84px;
+    background-position-x: 0px;
+
+}
+
+.dino-corriendo {
+    animation: animarDino 0.25s steps(2) infinite;
+}
+.dino-estrellado {
+    background-position-x: -252px;
+}
+
+.suelo {
+    width: 200%;
+    height: 42px;
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    background: url(../img/juego5/suelo.png) repeat-x 0px 0px;
+    background-size: 50% 42px;
+
+}
+
+.cactus{
+    width: 46px;
+    height: 96px;
+
+    position: absolute;
+    bottom: 16px;
+    left: 600px;
+    z-index: 1;
+
+    background: url(../img/juego5/cactus1.png) no-repeat;
+}
+.cactus2{
+    width: 98px;
+    height: 66px;
+
+    background: url(../img/juego5/cactus2.png) no-repeat;
+}
+
+.nube{
+    width: 92px;
+    height: 26px;
+
+    position: absolute;
+    z-index: 0;
+
+    background: url(../img/juego5/nube.png) no-repeat;
+    background-size: 92px 26px;
+}
+
+.score{
+    width: 100px;
+    height: 30px;
+
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    z-index: 10;
+
+    color: #d48871;
+    font-family: Verdana;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.game-over{
+    display: none;
+
+    position: absolute;
+    width: 100%;
+
+
+    text-align: center;
+    color: #7e928b;
+    font-size: 30px;
+    font-family: Verdana;
+    font-weight: 700;
+}
+
+@keyframes animarDino{
+    from{
+        background-position-x: -84px;
+    }
+    to{
+        background-position-x: -252px;
+    }
+}
+    </style>
+</head>
+<body>
+     <!-- Modal Explicación -->
+     <div class="modal fade" id="explanationModal" tabindex="-1" aria-labelledby="explanationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="explanationModalLabel" style="font-family: PressStart,sans-serif;color: #c9184a;font-size: 1em;">Juego 5: Saltar Obstaculos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p style="font-family: PressStart,sans-serif;font-size: 0.75em;">En este juego de obstaculos, un personaje debe esquivar 10 obstáculos . ¡Buena suerte!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="background-color: #c9184a;font-family: PressStart,sans-serif;font-size: 0.7em;">¡Vamos a jugar!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Enhorabuena -->
+    <div class="modal fade" id="congratulationsModal" tabindex="-1" aria-labelledby="congratulationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="congratulationsModalLabel" style="font-family: PressStart,sans-serif;color: #c9184a;font-size: 1em;">¡Enhorabuena!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p style="font-family: PressStart,sans-serif;font-size: 0.75em;">Has superado el juego 5!</p>
+                    <br>
+                    <p style="font-family: PressStart,sans-serif;font-size: 0.75em;">Pista: I</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='juego6.html'" style="background-color: #c9184a;font-family: PressStart,sans-serif;font-size: 0.7em;">Siguiente Juego</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <!-- Logo -->
+        <img src="../img/LOGO.png" alt="Logo" class="logo">
+
+        <!-- Barra de progreso -->
+        <div class="progress-container">
+            <span class="progress-label">Progreso:</span>
+            <div class="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div id="progress-bar" class="progress-bar" style="width:40%; background-color:#c9184a;font-family: PressStart,sans-serif;">40%</div>
+            </div>
+        </div>
+
+        <!-- Perfil -->
+        <div class="profile-container">
+            <img src="../img/IMG_4134.jpg" alt="Perfil" class="profile-pic">
+            <span class="username">cris_dhl</span>
+        </div>
+    </nav>
+    <div class="contenedor">
+
+        <div class="suelo"></div>
+        
+        <div class="dino dino-corriendo"></div>
+
+        <div class="score">0</div>
+
+    </div>
+
+    <div class="game-over">GAME OVER</div>
+
+
+    <script>
+        function aumentarProgreso(valor) {
+            let barra = document.getElementById("progress-bar");
+            let progresoActual = parseInt(barra.style.width); // Obtener el progreso actual como número
+            let nuevoProgreso = Math.min(progresoActual + valor, 100); // Asegurar que no pase del 100%
+
+            barra.style.width = nuevoProgreso + "%"; 
+            barra.innerText = nuevoProgreso + "%"; 
+        }
+
+        // Función para mostrar el modal de enhorabuena
+        function showCongratulationsModal() {
+            var congratulationsModal = new bootstrap.Modal(document.getElementById('congratulationsModal'));
+            congratulationsModal.show();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var explanationModal = new bootstrap.Modal(document.getElementById('explanationModal'));
+            explanationModal.show();
+            mostrarSilueta();
+        });
+    </script>
+
+
+    <script>
+
+    //****** GAME LOOP ********//
+    
+    var time = new Date();
+    var deltaTime = 0;
+    
+    if(document.readyState === "complete" || document.readyState === "interactive"){
+        setTimeout(Init, 1);
+    }else{
+        document.addEventListener("DOMContentLoaded", Init); 
+    }
+    
+    function Init() {
+        if (!juegoIniciado) return;
+        time = new Date();
+        Start();
+        Loop();
+    }
+    
+    function Loop() {
+        deltaTime = (new Date() - time) / 1000;
+        time = new Date();
+        Update();
+        requestAnimationFrame(Loop);
+    }
+    
+    //****** GAME LOGIC ********//
+    
+    var sueloY = 22;
+    var velY = 0;
+    var impulso = 900;
+    var gravedad = 2500;
+    
+    var dinoPosX = 42;
+    var dinoPosY = sueloY; 
+    
+    var sueloX = 0;
+    var velEscenario = 1280/3;
+    var gameVel = 1;
+    var score = 0;
+    
+    var parado = false;
+    var saltando = false;
+    
+    var tiempoHastaObstaculo = 2;
+    var tiempoObstaculoMin = 0.7;
+    var tiempoObstaculoMax = 1.8;
+    var obstaculoPosY = 16;
+    var obstaculos = [];
+    
+    var tiempoHastaNube = 0.5;
+    var tiempoNubeMin = 0.7;
+    var tiempoNubeMax = 2.7;
+    var maxNubeY = 270;
+    var minNubeY = 100;
+    var nubes = [];
+    var velNube = 0.5;
+    
+    var contenedor;
+    var dino;
+    var textoScore;
+    var suelo;
+    var gameOver;
+    
+    let juegoIniciado = false;
+
+    function Start() {
+        gameOver = document.querySelector(".game-over");
+        suelo = document.querySelector(".suelo");
+        contenedor = document.querySelector(".contenedor");
+        textoScore = document.querySelector(".score");
+        dino = document.querySelector(".dino");
+        document.addEventListener("keydown", HandleKeyDown);
+    }
+    
+    function Update() {
+        if(parado) return;
+        
+        MoverDinosaurio();
+        MoverSuelo();
+        DecidirCrearObstaculos();
+        DecidirCrearNubes();
+        MoverObstaculos();
+        MoverNubes();
+        DetectarColision();
+    
+        velY -= gravedad * deltaTime;
+    }
+    
+    function HandleKeyDown(ev) {
+        if (ev.keyCode == 32 && juegoIniciado) {
+            Saltar();
+        }
+    }
+    
+    function Saltar(){
+        if(dinoPosY === sueloY){
+            saltando = true;
+            velY = impulso;
+            dino.classList.remove("dino-corriendo");
+        }
+    }
+    
+    function MoverDinosaurio() {
+        dinoPosY += velY * deltaTime;
+        if(dinoPosY < sueloY){
+            
+            TocarSuelo();
+        }
+        dino.style.bottom = dinoPosY+"px";
+    }
+    
+    function TocarSuelo() {
+        dinoPosY = sueloY;
+        velY = 0;
+        if(saltando){
+            dino.classList.add("dino-corriendo");
+        }
+        saltando = false;
+    }
+    
+    function MoverSuelo() {
+        sueloX += CalcularDesplazamiento();
+        suelo.style.left = -(sueloX % contenedor.clientWidth) + "px";
+    }
+    
+    function CalcularDesplazamiento() {
+        return velEscenario * deltaTime * gameVel;
+    }
+    
+    function Estrellarse() {
+        dino.classList.remove("dino-corriendo");
+        dino.classList.add("dino-estrellado");
+        parado = true;
+    }
+    
+    function DecidirCrearObstaculos() {
+        tiempoHastaObstaculo -= deltaTime;
+        if(tiempoHastaObstaculo <= 0) {
+            CrearObstaculo();
+        }
+    }
+    
+    function DecidirCrearNubes() {
+        tiempoHastaNube -= deltaTime;
+        if(tiempoHastaNube <= 0) {
+            CrearNube();
+        }
+    }
+    
+    function CrearObstaculo() {
+        var obstaculo = document.createElement("div");
+        contenedor.appendChild(obstaculo);
+        obstaculo.classList.add("cactus");
+        if(Math.random() > 0.5) obstaculo.classList.add("cactus2");
+        obstaculo.posX = contenedor.clientWidth;
+        obstaculo.style.left = contenedor.clientWidth+"px";
+    
+        obstaculos.push(obstaculo);
+        tiempoHastaObstaculo = tiempoObstaculoMin + Math.random() * (tiempoObstaculoMax-tiempoObstaculoMin) / gameVel;
+    }
+    
+    function CrearNube() {
+        var nube = document.createElement("div");
+        contenedor.appendChild(nube);
+        nube.classList.add("nube");
+        nube.posX = contenedor.clientWidth;
+        nube.style.left = contenedor.clientWidth+"px";
+        nube.style.bottom = minNubeY + Math.random() * (maxNubeY-minNubeY)+"px";
+        
+        nubes.push(nube);
+        tiempoHastaNube = tiempoNubeMin + Math.random() * (tiempoNubeMax-tiempoNubeMin) / gameVel;
+    }
+    
+    function MoverObstaculos() {
+        for (var i = obstaculos.length - 1; i >= 0; i--) {
+            if(obstaculos[i].posX < -obstaculos[i].clientWidth) {
+                obstaculos[i].parentNode.removeChild(obstaculos[i]);
+                obstaculos.splice(i, 1);
+                GanarPuntos();
+            }else{
+                obstaculos[i].posX -= CalcularDesplazamiento();
+                obstaculos[i].style.left = obstaculos[i].posX+"px";
+            }
+        }
+    }
+    
+    function MoverNubes() {
+        for (var i = nubes.length - 1; i >= 0; i--) {
+            if(nubes[i].posX < -nubes[i].clientWidth) {
+                nubes[i].parentNode.removeChild(nubes[i]);
+                nubes.splice(i, 1);
+            }else{
+                nubes[i].posX -= CalcularDesplazamiento() * velNube;
+                nubes[i].style.left = nubes[i].posX+"px";
+            }
+        }
+    }
+    
+    function GanarPuntos() {
+        score++;
+        textoScore.innerText = score;
+        if(score == 5){
+            gameVel = 1.5;
+            contenedor.classList.add("mediodia");
+        }else if(score == 10) {
+            gameVel = 2;
+            contenedor.classList.add("tarde");
+        } else if(score == 20) {
+            gameVel = 3;
+            contenedor.classList.add("noche");
+        }
+        suelo.style.animationDuration = (3/gameVel)+"s";
+    }
+    
+    function GameOver() {
+    Estrellarse();
+    if (score >= 10) {
+        showCongratulationsModal();
+    } else {
+        setTimeout(ReiniciarJuego, 1000); // Reinicia el juego tras 1 segundo
+    }
+}
+
+function ReiniciarJuego() {
+    // Reiniciar variables del juego
+    score = 0;
+    textoScore.innerText = score;
+    gameVel = 1;
+    contenedor.classList.remove("mediodia", "tarde", "noche");
+    parado = false;
+    obstaculos.forEach(obstaculo => obstaculo.remove());
+    obstaculos = [];
+    nubes.forEach(nube => nube.remove());
+    nubes = [];
+    dino.classList.add("dino-corriendo");
+    dino.classList.remove("dino-estrellado");
+    dinoPosY = sueloY;
+    velY = 0;
+    sueloX = 0;
+    Init();
+}
+
+
+function showCongratulationsModal() {
+    var congratulationsModal = new bootstrap.Modal(document.getElementById('congratulationsModal'));
+    congratulationsModal.show();
+}
+    
+    function DetectarColision() {
+        for (var i = 0; i < obstaculos.length; i++) {
+            if(obstaculos[i].posX > dinoPosX + dino.clientWidth) {
+                //EVADE
+                break; //al estar en orden, no puede chocar con más
+            }else{
+                if(IsCollision(dino, obstaculos[i], 10, 30, 15, 20)) {
+                    GameOver();
+                }
+            }
+        }
+    }
+    
+    function IsCollision(a, b, paddingTop, paddingRight, paddingBottom, paddingLeft) {
+        var aRect = a.getBoundingClientRect();
+        var bRect = b.getBoundingClientRect();
+    
+        return !(
+            ((aRect.top + aRect.height - paddingBottom) < (bRect.top)) ||
+            (aRect.top + paddingTop > (bRect.top + bRect.height)) ||
+            ((aRect.left + aRect.width - paddingRight) < bRect.left) ||
+            (aRect.left + paddingLeft > (bRect.left + bRect.width))
+        );
+    }
+    document.addEventListener("keydown", function(event) {
+        if (event.code === "Space" && !juegoIniciado) {
+            juegoIniciado = true;
+            Init();
+        }
+    });
+    
+    </script>
+    <script defer type="text/javascript" src="../jquery/jquery-3.7.1.min.js"></script>
+    <script defer type="text/javascript" src="../bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+    <script defer type="text/javascript" src="../jquery/popper.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAN VALENTIN</title>
+    <link rel="stylesheet" href="../bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <style>
+        @font-face {
+            font-family: PressStart;
+            src: url("../css/fonts/PressStart2P-Regular.ttf") format("truetype");
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-image: url("../img/fondo-3def.svg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding-top: 80px; /* Ajuste para navbar */
+        }
+        h1 {
+            color: #c9184a;
+            font-size: 2em;
+            margin-top: 20px;
+        }
+        /* Navbar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 60px;
+            background-color: #ff69b4;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        /* Logo */
+        .logo {
+            height: 40px;
+        }
+        /* Contenedor de progreso */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            justify-content: center;
+            margin: 0 20px;
+            gap: 10px;
+        }
+        .progress-label {
+            font-family: PressStart, sans-serif;
+            font-size: 1em;
+            font-weight: bold;
+            color: white;
+        }
+        .progress {
+            width: 60%;
+            height: 20px;
+            margin: 0;
+        }
+        /* Perfil */
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+        .username {
+            font-size: 1em;
+            color: white;
+            font-weight: bold;
+        }
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 100px;
+            gap: 20px;
+        }
+        .silueta {
+            width: 300px;
+            height: 300px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            border: 2px solid #c9184a;
+            margin-bottom: 20px;
+        }
+        .answer-input {
+            width: 250px;
+            padding: 10px;
+            font-size: 1em;
+            border: 2px solid #c9184a;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .check-button {
+            background-color: #c9184a;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .check-button:hover {
+            background-color: #a50f36;
+        }
+        .result-message {
+            font-family: PressStart, sans-serif;
+            font-size: 1em;
+            font-weight: bold;
+            color: #c9184a;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Modal Explicación -->
+    <div class="modal fade" id="explanationModal" tabindex="-1" aria-labelledby="explanationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="explanationModalLabel" style="font-family: PressStart,sans-serif;color: #c9184a;font-size: 1em;">Juego 2: Siluetas del Amor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p style="font-family: PressStart,sans-serif;font-size: 0.75em;">En este juego de siluetas, diferentes siluetas románticas aparecerán en la pantalla, y tendrás que emparejar cada una con su sombra correspondiente. ¡Buena suerte!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="background-color: #c9184a;font-family: PressStart,sans-serif;font-size: 0.7em;">¡Vamos a jugar!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Enhorabuena -->
+    <div class="modal fade" id="congratulationsModal" tabindex="-1" aria-labelledby="congratulationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="congratulationsModalLabel" style="font-family: PressStart,sans-serif;color: #c9184a;font-size: 1em;">¡Enhorabuena!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p style="font-family: PressStart,sans-serif;font-size: 0.75em;">Has superado el juego 2!</p>
+                    <br>
+                    <p style="font-family: PressStart,sans-serif;font-size: 0.75em;">Pista: T</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='juego3.html'" style="background-color: #c9184a;font-family: PressStart,sans-serif;font-size: 0.7em;">Siguiente Juego</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <!-- Logo -->
+        <img src="../img/LOGO.png" alt="Logo" class="logo">
+
+        <!-- Barra de progreso -->
+        <div class="progress-container">
+            <span class="progress-label">Progreso:</span>
+            <div class="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div id="progress-bar" class="progress-bar" style="width:10%; background-color:#c9184a;font-family: PressStart,sans-serif;">10%</div>
+            </div>
+        </div>
+
+        <!-- Perfil -->
+        <div class="profile-container">
+            <img src="../img/IMG_4134.jpg" alt="Perfil" class="profile-pic">
+            <span class="username">cris_dhl</span>
+        </div>
+    </nav>
+
+    <!-- Título y Juego -->
+    <h1 style="font-family: PressStart,sans-serif;font-size: 1.5em;">Adivina la Silueta</h1>
+    <div class="silueta" id="silueta"></div>
+    <input type="text" class="answer-input" id="answer" placeholder="Escribe tu respuesta aquí">
+    <button class="check-button" onclick="checkAnswer()" style="font-family: PressStart,sans-serif;font-size: 0.75em;">Comprobar Respuesta</button>
+    <div class="result-message" id="resultMessage"></div>
+
+    <script>
+        const siluetas = [
+            { img: "../img/juego2/campanilla.jfif", answer: "Campanilla" },
+            { img: "../img/juego2/LaBellaYLaBesti.jfif", answer: "La Bella y La Bestia" },
+            { img: "../img/juego2/MickeyMouse.jfif", answer: "Mickey Mouse" },
+            { img: "../img/juego2/olaf.jpg", answer: "Olaf" },
+            { img: "../img/juego2/Simba.jfif", answer: "Simba" },
+            { img: "../img/juego2/Stitch.jfif", answer: "Stitch" }
+        ];
+
+        let remainingSiluetas = [...siluetas];
+        let correctAnswers = 0;
+
+        function mostrarSilueta() {
+            if (remainingSiluetas.length === 0) {
+                return;
+            }
+            const randomIndex = Math.floor(Math.random() * remainingSiluetas.length);
+            const silueta = remainingSiluetas[randomIndex];
+            document.getElementById("silueta").style.backgroundImage = `url(${silueta.img})`;
+            document.getElementById("silueta").dataset.answer = silueta.answer;
+        }
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
+            const resultMessage = document.getElementById('resultMessage');
+            const correctAnswer = document.getElementById("silueta").dataset.answer.toLowerCase();
+
+            if (userAnswer === correctAnswer) {
+                resultMessage.textContent = "¡Correcto! ¡Felicidades!";
+                resultMessage.style.color = "green";
+                correctAnswers++;
+                remainingSiluetas = remainingSiluetas.filter(silueta => silueta.answer.toLowerCase() !== correctAnswer);
+                if (correctAnswers === siluetas.length) {
+                    setTimeout(()=>{
+                        showCongratulationsModal();
+                        aumentarProgreso(10);
+                    }, 1000);
+                } else {
+                    setTimeout(mostrarSilueta, 100);
+                }
+            } else {
+                resultMessage.textContent = "¡Intenta de nuevo!";
+                resultMessage.style.color = "red";
+            }
+        }
+
+        function aumentarProgreso(valor) {
+            let barra = document.getElementById("progress-bar");
+            let progresoActual = parseInt(barra.style.width); // Obtener el progreso actual como número
+            let nuevoProgreso = Math.min(progresoActual + valor, 100); // Asegurar que no pase del 100%
+
+            barra.style.width = nuevoProgreso + "%"; 
+            barra.innerText = nuevoProgreso + "%"; 
+        }
+
+        // Función para mostrar el modal de enhorabuena
+        function showCongratulationsModal() {
+            var congratulationsModal = new bootstrap.Modal(document.getElementById('congratulationsModal'));
+            congratulationsModal.show();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var explanationModal = new bootstrap.Modal(document.getElementById('explanationModal'));
+            explanationModal.show();
+            mostrarSilueta();
+        });
+    </script>
+
+    <script defer type="text/javascript" src="../jquery/jquery-3.7.1.min.js"></script>
+    <script defer type="text/javascript" src="../bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+    <script defer type="text/javascript" src="../jquery/popper.min.js"></script>
+</body>
+</html>

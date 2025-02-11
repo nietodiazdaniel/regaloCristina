@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAN VALENTIN</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" href="../bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+</head>
+<body id="body_bienvenida">
+    <div id="login-container">
+        <h2 id="iniciar_sesion">Iniciar Sesión</h2>
+        <form id="loginForm">
+            <input class="input_signin" type="text" id="username" placeholder="Usuario" title="Tu usuario de Instagram" required>
+            <input class="input_signin" type="password" id="password" placeholder="Contraseña" maxlength="8" title="Pista: Fecha Especial" required>
+            <p class="error" id="error-message"></p>
+            <button id="ingresar" class="btn">Ingresar</button>
+        </form>
+    </div>
+
+    <div class="modal" id="welcomeModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="welcomeModalLabel">Enhorabuena!</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p id="welcomeMessage">Has acertado la contraseña!. Comenzamos con los juegos!</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="boton_iniciarjuegos" class="btn btn-primary"onclick="window.location.href='juego1.html'">¡Allá Vamos!</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+    <script defer src="../js/signin.js"></script>
+    <script defer type="text/javascript" src="../jquery/jquery-3.7.1.min.js"></script>
+    <script defer type="text/javascript" src="../bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+    <script defer type="text/javascript" src="../jquery/popper.min.js"></script>
+</body>
+</html>
