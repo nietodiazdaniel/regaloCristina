@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAN VALENTIN</title>
+    <link rel="stylesheet" href="../bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <style>
+        @font-face {
+            font-family: PressStart;
+            src: url("../css/fonts/PressStart2P-Regular.ttf") format("truetype");
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-image: url("../img/fondo-3def.svg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding-top: 80px; /* Ajuste para navbar */
+        }
+         /* Navbar */
+         .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 60px;
+            background-color: #ff69b4;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        /* Logo */
+        .logo {
+            height: 40px;
+        }
+        /* Contenedor de progreso */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            justify-content: center;
+            margin: 0 20px;
+            gap: 10px;
+        }
+        .progress-label {
+            font-family: PressStart, sans-serif;
+            font-size: 1em;
+            font-weight: bold;
+            color: white;
+        }
+        .progress {
+            width: 60%;
+            height: 20px;
+            margin: 0;
+        }
+        /* Perfil */
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+        .username {
+            font-size: 1em;
+            color: white;
+            font-weight: bold;
+        }
+        .game-container {
+            text-align: center;
+            font-family: PressStart, sans-serif;
+            color: #c9184a;
+        }
+        input[type="text"] {
+            font-family: PressStart, sans-serif;
+            font-size: 1em;
+            padding: 10px;
+            width: 200px;
+            margin: 20px;
+            text-align: center;
+        }
+        button {
+            background-color: #c9184a;
+            color: white;
+            font-family: PressStart, sans-serif;
+            font-size: 0.8em;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #d43061;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <!-- Logo -->
+        <img src="../img/LOGO.png" alt="Logo" class="logo">
+
+        <!-- Barra de progreso -->
+        <div class="progress-container">
+            <span class="progress-label">Progreso:</span>
+            <div class="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div id="progress-bar" class="progress-bar" style="width:10%; background-color:#c9184a;font-family: PressStart,sans-serif;">10%</div>
+            </div>
+        </div>
+
+        <!-- Perfil -->
+        <div class="profile-container">
+            <img src="../img/IMG_4134.jpg" alt="Perfil" class="profile-pic">
+            <span class="username">cris_dhl</span>
+        </div>
+    </nav>
+
+    <!-- Juego -->
+    <div class="game-container">
+        <h1>¡Adivina la palabra secreta!</h1>
+        <p>Ingresa la palabra "RATONSITA" para ganar:</p>
+        <input type="text" id="inputPalabra" placeholder="Escribe la palabra">
+        <button onclick="verificarPalabra()">Verificar</button>
+    </div>
+
+    <script>
+        function verificarPalabra() {
+            // Obtener el valor ingresado por el usuario
+            let palabraUsuario = document.getElementById("inputPalabra").value;
+
+            // Verificar si la palabra es correcta
+            if (palabraUsuario.toUpperCase() === "RATONSITA") {
+                alert("¡Has ganado! La palabra es correcta.");
+                aumentarProgreso(10); // Aumenta el progreso
+            } else {
+                alert("Intenta de nuevo. La palabra es incorrecta.");
+            }
+        }
+
+        // Función para aumentar el progreso
+        function aumentarProgreso(valor) {
+            let barra = document.getElementById("progress-bar");
+            let progresoActual = parseInt(barra.style.width); // Obtener el progreso actual como número
+            let nuevoProgreso = Math.min(progresoActual + valor, 100); // Asegurar que no pase del 100%
+
+            barra.style.width = nuevoProgreso + "%"; 
+            barra.innerText = nuevoProgreso + "%"; 
+        }
+    </script>
+
+    <script defer type="text/javascript" src="../jquery/jquery-3.7.1.min.js"></script>
+    <script defer type="text/javascript" src="../bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+    <script defer type="text/javascript" src="../jquery/popper.min.js"></script>
+</body>
+</html>

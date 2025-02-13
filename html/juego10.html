@@ -27,13 +27,8 @@
             height: 100vh;
             padding-top: 80px; /* Ajuste para navbar */
         }
-        h1 {
-            color: #c9184a;
-            font-size: 2em;
-            margin-top: 20px;
-        }
-        /* Navbar */
-        .navbar {
+         /* Navbar */
+         .navbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -90,61 +85,43 @@
             font-weight: bold;
         }
         .game-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 100px;
-            gap: 20px;
-        }
-        .silueta {
-            width: 300px;
-            height: 300px;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            border: 2px solid #c9184a;
-            margin-bottom: 20px;
-        }
-        .answer-input {
-            width: 250px;
-            padding: 10px;
-            font-size: 1em;
-            border: 2px solid #c9184a;
-            border-radius: 5px;
             text-align: center;
-            margin-bottom: 10px;
+            font-family: PressStart, sans-serif;
+            color: #c9184a;
         }
-        .check-button {
-            background-color: #c9184a;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .check-button:hover {
-            background-color: #a50f36;
-        }
-        .result-message {
+        input[type="text"] {
             font-family: PressStart, sans-serif;
             font-size: 1em;
-            font-weight: bold;
-            color: #c9184a;
-            margin-top: 20px;
+            padding: 10px;
+            width: 200px;
+            margin: 20px;
+            text-align: center;
+        }
+        #verificar {
+            background-color: #c9184a;
+            color: white;
+            font-family: PressStart, sans-serif;
+            font-size: 0.8em;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        #verificar:hover {
+            background-color: #d43061;
         }
     </style>
 </head>
 <body>
-    <!-- Modal Explicación -->
-    <div class="modal fade" id="explanationModal" tabindex="-1" aria-labelledby="explanationModalLabel" aria-hidden="true">
+     <!-- Modal Explicación -->
+     <div class="modal fade" id="explanationModal" tabindex="-1" aria-labelledby="explanationModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="explanationModalLabel" style="font-family: PressStart,sans-serif;color: #c9184a;font-size: 1em;">Juego 2: Siluetas del Amor</h5>
+                    <h5 class="modal-title" id="explanationModalLabel" style="font-family: PressStart,sans-serif;color: #c9184a;font-size: 1em;">Juego 10: Descifra la Palabra</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p style="font-family: PressStart,sans-serif;font-size: 0.75em;">En este juego de siluetas, diferentes siluetas románticas aparecerán en la pantalla, y tendrás que emparejar cada una con su sombra correspondiente. ¡Buena suerte!</p>
+                    <p style="font-family: PressStart,sans-serif;font-size: 0.75em;">En este juego debes adivinar la palabra secreta a partir de las pistas que has ido recibiendo. ¡Buena suerte!</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="background-color: #c9184a;font-family: PressStart,sans-serif;font-size: 0.7em;">¡Vamos a jugar!</button>
@@ -161,12 +138,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p style="font-family: PressStart,sans-serif;font-size: 0.75em;">Has superado el juego 2!</p>
+                    <p style="font-family: PressStart,sans-serif;font-size: 0.75em;">Has superado el juego 10!</p>
                     <br>
-                    <p style="font-family: PressStart,sans-serif;font-size: 0.75em;">Pista: T</p>
+                    <p style="font-family: PressStart,sans-serif;font-size: 0.75em;"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="window.location.href='juego3.html'" style="background-color: #c9184a;font-family: PressStart,sans-serif;font-size: 0.7em;">Siguiente Juego</button>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='carta.html'" style="background-color: #c9184a;font-family: PressStart,sans-serif;font-size: 0.7em;">Siguiente</button>
                 </div>
             </div>
         </div>
@@ -180,7 +157,7 @@
         <div class="progress-container">
             <span class="progress-label">Progreso:</span>
             <div class="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                <div id="progress-bar" class="progress-bar" style="width:10%; background-color:#c9184a;font-family: PressStart,sans-serif;">10%</div>
+                <div id="progress-bar" class="progress-bar" style="width:90%; background-color:#c9184a;font-family: PressStart,sans-serif;">90%</div>
             </div>
         </div>
 
@@ -190,61 +167,12 @@
             <span class="username">cris_dhl</span>
         </div>
     </nav>
-
-    <!-- Título y Juego -->
-    <h1 style="font-family: PressStart,sans-serif;font-size: 1.5em;">Adivina la Silueta</h1>
-    <div class="silueta" id="silueta"></div>
-    <input type="text" class="answer-input" id="answer" placeholder="Escribe tu respuesta aquí">
-    <button class="check-button" onclick="checkAnswer()" style="font-family: PressStart,sans-serif;font-size: 0.75em;">Comprobar Respuesta</button>
-    <div class="result-message" id="resultMessage"></div>
-
+    <div class="game-container">
+        <h1>¡Adivina la palabra secreta!</h1>
+        <input type="text" id="inputPalabra" placeholder="Escribe la palabra">
+        <button id="verificar" onclick="verificarPalabra()">Verificar</button>
+    </div>
     <script>
-        const siluetas = [
-            { img: "../img/juego2/campanilla.jfif", answer: "Campanilla" },
-            { img: "../img/juego2/LaBellaYLaBesti.jfif", answer: "La Bella y La Bestia" },
-            { img: "../img/juego2/MickeyMouse.jfif", answer: "Mickey Mouse" },
-            { img: "../img/juego2/olaf.jpg", answer: "Olaf" },
-            { img: "../img/juego2/Simba.jfif", answer: "Simba" },
-            { img: "../img/juego2/Stitch.jfif", answer: "Stitch" }
-        ];
-
-        let remainingSiluetas = [...siluetas];
-        let correctAnswers = 0;
-
-        function mostrarSilueta() {
-            if (remainingSiluetas.length === 0) {
-                return;
-            }
-            const randomIndex = Math.floor(Math.random() * remainingSiluetas.length);
-            const silueta = remainingSiluetas[randomIndex];
-            document.getElementById("silueta").style.backgroundImage = `url(${silueta.img})`;
-            document.getElementById("silueta").dataset.answer = silueta.answer;
-        }
-
-        function checkAnswer() {
-            const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
-            const resultMessage = document.getElementById('resultMessage');
-            const correctAnswer = document.getElementById("silueta").dataset.answer.toLowerCase();
-
-            if (userAnswer === correctAnswer) {
-                resultMessage.textContent = "¡Correcto! ¡Felicidades!";
-                resultMessage.style.color = "green";
-                correctAnswers++;
-                remainingSiluetas = remainingSiluetas.filter(silueta => silueta.answer.toLowerCase() !== correctAnswer);
-                if (correctAnswers === siluetas.length) {
-                    setTimeout(()=>{
-                        showCongratulationsModal();
-                        aumentarProgreso(10);
-                    }, 1000);
-                } else {
-                    setTimeout(mostrarSilueta, 100);
-                }
-            } else {
-                resultMessage.textContent = "¡Intenta de nuevo!";
-                resultMessage.style.color = "red";
-            }
-        }
-
         function aumentarProgreso(valor) {
             let barra = document.getElementById("progress-bar");
             let progresoActual = parseInt(barra.style.width); // Obtener el progreso actual como número
@@ -265,6 +193,20 @@
             explanationModal.show();
             mostrarSilueta();
         });
+        function verificarPalabra() {
+            // Obtener el valor ingresado por el usuario
+            let palabraUsuario = document.getElementById("inputPalabra").value;
+
+            // Verificar si la palabra es correcta
+            if (palabraUsuario.toUpperCase() === "RATONSITA") {
+                setTimeout(() => {
+                    aumentarProgreso(10);
+                    showCongratulationsModal();
+                }, 100);
+            } else {
+                // alert("Intenta de nuevo. La palabra es incorrecta.");
+            }
+        }
     </script>
 
     <script defer type="text/javascript" src="../jquery/jquery-3.7.1.min.js"></script>

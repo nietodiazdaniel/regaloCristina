@@ -1,95 +1,97 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rompecabezas Romántico</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explosión de Amor 💥❤️</title>
     <style>
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #ffe6e6;
-      }
-      .puzzle-container {
-        display: grid;
-        grid-template-columns: repeat(6, 100px); /*COLUMNAS Y FILAS*/
-        grid-template-rows: repeat(6, 100px); /*COLUMNAS Y FILAS*/
-        gap: 2px;
-        border: 2px solid #d63384;
-      }
-      .piece {
-        width: 100px;
-        height: 100px;
-        background-size: 600px 600px; /*COLUMNAS *100*/
-        cursor: pointer;
-        border: 1px solid #fff;
-      }
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #ffe6f0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #gameContainer {
+            position: relative;
+            width: 70vh;
+            height: 70vh; /* Cuadrado */
+            background-color: white;
+            border: 2px solid #ff4d4d;
+            overflow: hidden;
+        }
+        .corazon {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-image: url("../img/juego9/3a2cd4d3-c1f8-4708-84c1-3edfc142e8d5-removebg-preview.png");
+            background-size: cover;
+            cursor: pointer;
+            animation: crecer 1s linear forwards;
+        }
+        @keyframes crecer {
+            from {
+                width: 30px;
+                height: 30px;
+            }
+            to {
+                width: 80px;
+                height: 80px;
+                /* opacity: 0; */
+            }
+        }
+        #score {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
     </style>
-  </head>
-  <body>
-    <div class="puzzle-container" id="puzzle"></div>
-    <script>
-      const imageSrc = "../img/juego8/IMG_1849.jpg"; // Reemplaza con tu imagen
-      let pieces = [];
-      let selected = null;
+</head>
+<body>
 
-      function shuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
-        }
-      }
+<h2>💥 Explosión de Amor 💥</h2>
+<p>Puntuación: <span id="score">0</span></p>
+<div id="gameContainer"></div>
 
-      function createPuzzle() {
-        const puzzle = document.getElementById("puzzle");
-        for (let i = 0; i < 36; i++) {
-          //PIEZAS TOTALES
-          const x = (i % 6) * -100; //COLUMNAS Y FILAS
-          const y = Math.floor(i / 6) * -100; //COLUMNAS Y FILAS
-          const piece = document.createElement("div");
-          piece.classList.add("piece");
-          piece.style.backgroundImage = `url(${imageSrc})`;
-          piece.style.backgroundPosition = `${x}px ${y}px`;
-          piece.dataset.index = i;
-          piece.addEventListener("click", selectPiece);
-          pieces.push(piece);
-        }
-        shuffle(pieces);
-        pieces.forEach((piece) => puzzle.appendChild(piece));
-      }
+<script>
+    const gameContainer = document.getElementById("gameContainer");
+    const scoreDisplay = document.getElementById("score");
+    let score = 0;
 
-      function selectPiece(event) {
-        if (!selected) {
-          selected = event.target;
-        } else {
-          const tempIndex = selected.dataset.index;
-          selected.dataset.index = event.target.dataset.index;
-          event.target.dataset.index = tempIndex;
+    function crearCorazon() {
+        const corazon = document.createElement("div");
+        corazon.classList.add("corazon");
 
-          const tempStyle = selected.style.backgroundPosition;
-          selected.style.backgroundPosition =
-            event.target.style.backgroundPosition;
-          event.target.style.backgroundPosition = tempStyle;
+        // Posicionar dentro del contenedor cuadrado
+        const maxX = gameContainer.clientWidth - 80;
+        const maxY = gameContainer.clientHeight - 80;
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
+        corazon.style.left = `${x}px`;
+        corazon.style.top = `${y}px`;
 
-          selected = null;
-          checkWin();
-        }
-      }
+        // Evento de clic en el corazón
+        corazon.addEventListener("click", () => {
+            corazon.remove();
+            score++;
+            scoreDisplay.textContent = score;
+        });
 
-      function checkWin() {
-        const correct = pieces.every(
-          (piece, index) => piece.dataset.index == index
-        );
-        if (correct) {
-          setTimeout(() => {
-            alert("¡Felicidades! Has completado el rompecabezas.");
-          }, 100);
-        }
-      }
+        // Eliminar tras la animación
+        setTimeout(() => {
+            corazon.remove();
+        }, 1000);
 
-      createPuzzle();
-    </script>
-  </body>
+        gameContainer.appendChild(corazon);
+    }
+
+    // Generar corazones cada segundo
+    setInterval(crearCorazon, 800);
+</script>
+
+</body>
 </html>

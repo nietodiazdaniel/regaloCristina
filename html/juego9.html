@@ -29,7 +29,6 @@
         justify-content: center;
         height: 100vh;
         padding-top: 80px; /* Ajuste para navbar */
-        overflow: hidden;
       }
       /* Navbar */
       .navbar {
@@ -88,14 +87,37 @@
         color: white;
         font-weight: bold;
       }
-
-      /* JUEGO */
-      #gameCanvas {
-        /*background-color: #fff0f5;*/
-        background-image: url("../img/juego6/fondojuego.png");
-        background-repeat: no-repeat;
+      #gameContainer {
+        position: relative;
+        width: 70vh;
+        height: 70vh;
+        background-color: white;
+        border: 2px solid #ff4d4d;
+        overflow: hidden;
+      }
+      .corazon {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-image: url("../img/juego9/3a2cd4d3-c1f8-4708-84c1-3edfc142e8d5-removebg-preview.png");
         background-size: cover;
-        background-position: center;
+        cursor: pointer;
+        animation: crecer 1s linear forwards;
+      }
+      @keyframes crecer {
+        from {
+          width: 30px;
+          height: 30px;
+        }
+        to {
+          width: 80px;
+          height: 80px;
+        }
+      }
+      #score {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
       }
     </style>
   </head>
@@ -120,7 +142,7 @@
                 font-size: 1em;
               "
             >
-              Juego 6: Atrapa los Ratones
+              Juego 9: Explosión de Amor
             </h5>
             <button
               type="button"
@@ -131,8 +153,8 @@
           </div>
           <div class="modal-body">
             <p style="font-family: PressStart, sans-serif; font-size: 0.75em">
-              En este juego de ratones, debes capturar 15 ratones cayendo del
-              cielo sin llegar a 3 fallos. ¡Buena suerte!
+              En este juego debes hacer clic en 20 corazones antes de que
+              desaparezcan. ¡Buena suerte!
             </p>
           </div>
           <div class="modal-footer">
@@ -183,18 +205,18 @@
           </div>
           <div class="modal-body">
             <p style="font-family: PressStart, sans-serif; font-size: 0.75em">
-              Has superado el juego 6!
+              Has superado el juego 9!
             </p>
             <br />
             <p style="font-family: PressStart, sans-serif; font-size: 0.75em">
-              Pista: N
+              Pista: R
             </p>
           </div>
           <div class="modal-footer">
             <button
               type="button"
               class="btn btn-primary"
-              onclick="window.location.href='juego7.html'"
+              onclick="window.location.href='juego10.html'"
               style="
                 background-color: #c9184a;
                 font-family: PressStart, sans-serif;
@@ -226,12 +248,12 @@
             id="progress-bar"
             class="progress-bar"
             style="
-              width: 50%;
+              width: 80%;
               background-color: #c9184a;
               font-family: PressStart, sans-serif;
             "
           >
-            50%
+            80%
           </div>
         </div>
       </div>
@@ -243,26 +265,10 @@
       </div>
     </nav>
 
-    <div>
-      <span
-        style="font-family: PressStart, sans-serif; color: #c9184a"
-        id="score"
-        >Aciertos: 0
-      </span>
-      <span
-        style="font-family: PressStart, sans-serif; color: #c9184a"
-        id="failures"
-        >Fallos: 0</span
-      >
-    </div>
-    <canvas id="gameCanvas"></canvas>
-    <p
-      id="mensajeFallo"
-      style="display: none; font-family: PressStart, sans-serif; color: red"
-    >
-      Fallaste, vuelve a intentarlo
+    <p style="font-family: PressStart, sans-serif; color: #c9184a">
+      Puntuación: <span id="score">0</span>
     </p>
-
+    <div id="gameContainer"></div>
     <script>
       function aumentarProgreso(valor) {
         let barra = document.getElementById("progress-bar");
@@ -289,160 +295,59 @@
         mostrarSilueta();
       });
     </script>
-
     <script>
-      const canvas = document.getElementById("gameCanvas");
-      const ctx = canvas.getContext("2d");
-      canvas.width = 800;
-      canvas.height = 600;
-
-      const player = {
-        x: canvas.width / 2 - 25,
-        y: canvas.height - 50,
-        width: 50,
-        height: 50,
-        speed: 5,
-        dx: 0,
-      };
-
-      const scoreElement = document.getElementById("score");
-      const failuresElement = document.getElementById("failures");
-
-      const hearts = [];
-      const heartSize = 50;
+      const gameContainer = document.getElementById("gameContainer");
+      const scoreDisplay = document.getElementById("score");
       let score = 0;
-      let gameOver = false;
-      let fallos = 0;
-      // Cargar el video del corazón
-      const heartVideo = document.createElement("video");
-      heartVideo.src = "../img/juego6/Animation-1739276009894.webm";
-      heartVideo.loop = true;
-      heartVideo.muted = true;
-      heartVideo.play();
+      let gameInterval;
 
-      let juegoIniciado = false;
+      function crearCorazon() {
+        if (score >= 20 || document.querySelectorAll(".corazon").length > 5) return; // Si ya se ganó, no generar más
 
-      // Cargar la imagen del jugador
-      const playerImage = new Image();
-      playerImage.src =
-        "../img/juego6/—Pngtree—half round cheese slice cartoon_19839934.png"; // Asegúrate de que la ruta sea correcta
+        const corazon = document.createElement("div");
+        corazon.classList.add("corazon");
 
-      function drawPlayer() {
-        ctx.drawImage(
-          playerImage,
-          player.x,
-          player.y,
-          player.width,
-          player.height
-        );
-      }
+        const maxX = gameContainer.clientWidth - 80;
+        const maxY = gameContainer.clientHeight - 80;
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
+        corazon.style.left = `${x}px`;
+        corazon.style.top = `${y}px`;
 
-      // Asegúrate de que la imagen se haya cargado antes de iniciar el juego
-      playerImage.onload = () => {
-        //spawnHeart();
-        update();
-      };
-
-      function reiniciarJuego() {
-        score = 0;
-        fallos = 0;
-        gameOver = false;
-        hearts.length = 0;
-        scoreElement.textContent = `Aciertos: ${score}`;
-        failuresElement.textContent = `Fallos: ${fallos}`;
-        document.getElementById("mensajeFallo").style.display = "none";
-        juegoIniciado = false;
-      }
-
-      function drawHearts() {
-        hearts.forEach((heart) => {
-          const aspectRatio = heartVideo.videoWidth / heartVideo.videoHeight;
-          const width = heartSize * aspectRatio;
-          const height = heartSize;
-          ctx.drawImage(heartVideo, heart.x, heart.y, width, height);
-        });
-      }
-
-      function updateHearts() {
-        for (let i = hearts.length - 1; i >= 0; i--) {
-          hearts[i].y += 2; // VELOCIDAD DE CAIDA DE RATONES
-          if (hearts[i].y > canvas.height) {
-            hearts.splice(i, 1);
-            fallos++;
-            failuresElement.textContent = `Fallos: ${fallos}`;
-            if (fallos >= 5) {
-              gameOver = true;
-              document.getElementById("mensajeFallo").style.display = "block";
-              setTimeout(reiniciarJuego, 3000);
-            }
-          } else if (
-            hearts[i].x > player.x &&
-            hearts[i].x < player.x + player.width &&
-            hearts[i].y + heartSize / 2 > player.y &&
-            hearts[i].y - heartSize / 2 < player.y + player.height
-          ) {
-            hearts.splice(i, 1);
-            score++;
-            scoreElement.textContent = `Aciertos: ${score}`;
-            if (score >= 15 && fallos < 5) {
-              gameOver = true;
-              setTimeout(() => {
-                showCongratulationsModal();
-                aumentarProgreso(10);
-              }, 100);
-            }
+        corazon.addEventListener("click", () => {
+          corazon.remove();
+          score++;
+          scoreDisplay.textContent = score;
+          if (score >= 20) {
+            finalizarJuego();
           }
-        }
+        });
+
+        setTimeout(() => {
+          corazon.remove();
+        }, 700);
+
+        gameContainer.appendChild(corazon);
       }
 
-      function movePlayer() {
-        player.x += player.dx;
-        if (player.x < 0) player.x = 0;
-        if (player.x + player.width > canvas.width)
-          player.x = canvas.width - player.width;
+      function iniciarJuego() {
+        gameInterval = setInterval(crearCorazon, 1200);
       }
 
-      function update() {
-        if (!gameOver && juegoIniciado) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          drawPlayer();
-          drawHearts();
-          updateHearts();
-          movePlayer();
-          requestAnimationFrame(update);
-        }
+      function finalizarJuego() {
+        clearInterval(gameInterval);
+        setTimeout(() => {
+            aumentarProgreso(10);
+            showCongratulationsModal();
+          }, 100);
       }
+      gameContainer.addEventListener("click", () => {
+            if (!gameInterval) {
+                iniciarJuego();
+            }
+        });
 
-      function spawnHeart() {
-        if (!gameOver && juegoIniciado) {
-          hearts.push({ x: Math.random() * (canvas.width - heartSize), y: 0 });
-          setTimeout(spawnHeart, 1500);
-        }
-      }
-
-      document.addEventListener("keydown", (e) => {
-        if (
-          !juegoIniciado &&
-          (e.key === "ArrowLeft" || e.key === "ArrowRight")
-        ) {
-          juegoIniciado = true;
-          spawnHeart();
-          update();
-        }
-        if (e.key === "ArrowLeft") player.dx = -player.speed;
-        if (e.key === "ArrowRight") player.dx = player.speed;
-      });
-
-      document.addEventListener("keyup", () => {
-        player.dx = 0;
-      });
-
-      heartVideo.addEventListener("loadeddata", () => {
-        spawnHeart();
-        update();
-      });
     </script>
-
     <script
       defer
       type="text/javascript"
